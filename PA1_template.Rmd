@@ -7,19 +7,78 @@ output:
 
 
 ## Loading and preprocessing the data
+```{r}
+data=read.csv("./activity.csv",header = TRUE)
+summary(data)
+StepsPerDay=aggregate(steps~date,data,sum,na.rm=TRUE)
+hist(StepsPerDay$steps)
+```
 
 
 
 ## What is mean total number of steps taken per day?
+```{r}
+mean(StepsPerDay$steps)
+median(StepsPerDay$steps)
+```
 
 
 
 ## What is the average daily activity pattern?
+```{r}
+StepsPerInterval=aggregate(steps~interval,data,mean,na.rm=TRUE)
+plot(StepsPerInterval$steps~StepsPerInterval$interval,type="l",col="red")
+StepsPerInterval[which.max(StepsPerInterval$steps),]$interval
+```
 
 
 
 ## Imputing missing values
+```{r}
+totalMissing=sum(is.na(data$steps))
+totalMissing
+```
+I decided to fill in all of the missing values in the dataset by the mean number of steps per interval.
+```{r}
+missingIndex<-is.na(data[,1])
+m<-mean(StepsPerInterval$steps)
+activity<-data
+activity[missingIndex,1]<-m
+head(activity)
+```
+```{r}
+TotalSteps=aggregate(steps~date,activity,sum)
 
+hist(TotalSteps$steps)
+mean(TotalSteps$steps)
+median(TotalSteps$steps)
+```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+```{r}
+activity$date<-as.Date(activity$date)
+library(dplyr)
+activity2<-activity%>%
+        mutate(dayType= ifelse(weekdays(activity$date)=="Saturday" | weekdays(activity$date)=="Sunday", "Weekend", "Weekday"))
+head(activity2)
+```
+
+```{r}
+averageStepByDayTypeAndInterval<-activity2 %>%
+  group_by(dayType, interval) %>%
+  summarize(averageStepByDay=sum(steps))
+
+head(averageStepByDayTypeAndInterval)
+```
+```{r}
+library(lattice)
+with(averageStepByDayTypeAndInterval, 
+      xyplot(averageStepByDay ~ interval | dayType, 
+      type = "l",      
+      main = "Total Number of Steps within Intervals by dayType",
+      xlab = "Daily Intervals",
+      ylab = "Average Number of Steps"))
+```
+
