@@ -12,6 +12,9 @@ data=read.csv("./activity.csv",header = TRUE)
 summary(data)
 StepsPerDay=aggregate(steps~date,data,sum,na.rm=TRUE)
 hist(StepsPerDay$steps)
+dev.copy(png,file="plot1.png")
+dev.off()
+
 ```
 
 
@@ -50,6 +53,9 @@ head(activity)
 TotalSteps=aggregate(steps~date,activity,sum)
 
 hist(TotalSteps$steps)
+dev.copy(png,file="plot2.png")
+dev.off()
+
 mean(TotalSteps$steps)
 median(TotalSteps$steps)
 ```
@@ -80,5 +86,8 @@ with(averageStepByDayTypeAndInterval,
       main = "Total Number of Steps within Intervals by dayType",
       xlab = "Daily Intervals",
       ylab = "Average Number of Steps"))
+dev.copy(png,file="plot3.png")
+dev.off()
+
 ```
 
