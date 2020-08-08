@@ -31,6 +31,24 @@ hist(StepsPerDay$steps)
 
 ![](PA1_template_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
 
+```r
+dev.copy(png,file="plot1.png")
+```
+
+```
+## png 
+##   3
+```
+
+```r
+dev.off()
+```
+
+```
+## png 
+##   2
+```
+
 
 
 ## What is mean total number of steps taken per day?
@@ -109,6 +127,24 @@ hist(TotalSteps$steps)
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+
+```r
+dev.copy(png,file="plot2.png")
+```
+
+```
+## png 
+##   3
+```
+
+```r
+dev.off()
+```
+
+```
+## png 
+##   2
+```
 
 ```r
 mean(TotalSteps$steps)
@@ -207,4 +243,22 @@ with(averageStepByDayTypeAndInterval,
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+
+```r
+dev.copy(png,file="plot3.png")
+```
+
+```
+## png 
+##   3
+```
+
+```r
+dev.off()
+```
+
+```
+## png 
+##   2
+```
 
